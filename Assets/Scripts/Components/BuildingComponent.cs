@@ -23,11 +23,19 @@ public class BuildingComponent : MonoBehaviour
             }
         }
         
-        if (!blocked && Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            position = this.transform.position;
-            position.z = -0.1f;
-            GameObject.Destroy(this);
+            if (!blocked)
+            {
+                position = this.transform.position;
+                position.z = -0.1f;
+                GameObject.Destroy(this);
+            }
+
+            else
+            {
+                GameObject.Destroy(this.gameObject);
+            }
         }
     }
 }
