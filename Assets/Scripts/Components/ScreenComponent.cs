@@ -4,7 +4,7 @@ public class ScreenComponent : MonoBehaviour
 {
     public State State;
 
-    private void Start()
+    protected virtual void Start()
     {
         StateController.OnChange += this.Changed;
     }
@@ -14,7 +14,7 @@ public class ScreenComponent : MonoBehaviour
         StateController.OnChange -= this.Changed;
     }
 
-    private void Changed(State oldState, State newState)
+    protected virtual void Changed(State oldState, State newState)
     {
         this.gameObject.SetActive(newState == this.State);
     }

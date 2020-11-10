@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    private BuildingController buildingController;
     private StateController stateController;
 
     private void Awake()
     {
+        this.buildingController = this.GetComponent<BuildingController>();
         this.stateController = this.GetComponent<StateController>();
     }
 
@@ -20,7 +22,15 @@ public class GameController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform.tag == Tags.BuildingCollider)
-                    hit.transform.parent.gameObject.AddComponent<BuildingComponent>();
+                {
+                    var building = hit.transform.parent.gameObject.GetComponent<BuildingComponent>();
+                    if (building != null)
+                        building.Collect();
+
+                    var placement = hit.transform.parent.gameObject.AddComponent<PlacementComponent>();
+                    if (placement != null)
+                        placement.BasePosition = hit.transform.parent.position;
+                }
             }
         }
 
@@ -32,10 +42,22 @@ public class GameController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform.tag == Tags.Island)
-                    this.stateController.Set(State.Island);
+                {
+                    var islandComponent = hit.transform.GetComponent<IslandComponent>();
+                    if (islandComponent != null)
+                        this.buildingController.CurrentIsland = islandComponent;
 
+                    this.stateController.Set(State.Island);
+                }
+                
                 if (hit.transform.tag == Tags.Region)
+                {
+                    var regionComponent = hit.transform.GetComponent<RegionComponent>();
+                    if (regionComponent != null)
+                        this.buildingController.RegionId = regionComponent.Id;
+
                     this.stateController.Set(State.Region);
+                }
             }
         }
     }

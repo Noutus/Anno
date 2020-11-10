@@ -4,9 +4,5 @@ using UnityEngine;
 
 public enum Flora
 {
-    Olive,
-    Onion,
-    Wheat,
-    Date,
-    Plum,
+    
 }

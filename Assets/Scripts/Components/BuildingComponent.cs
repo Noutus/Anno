@@ -1,33 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BuildingComponent : MonoBehaviour
 {
-    private const float TileSize = 0.32f;
+    public GameObject CollectionIcon;
+    public int Seconds;
+    
+    private IslandComponent islandComponent;
+    private bool ready;
+
+    public DateTime DateTime { get; set; }
+    public int Id { get; set; }
+
+    private void Start()
+    {
+        var buildingController = GameObject.FindObjectOfType<BuildingController>();
+        this.islandComponent = buildingController.CurrentIsland;
+        this.CollectionIcon.SetActive(false);
+    }
 
     private void Update()
     {
-        var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        position.x = TileSize * Mathf.Round(position.x / TileSize);
-        position.y = TileSize * Mathf.Round(position.y / TileSize);
-        position.z = -0.2f;
-
-        this.transform.position = position;
-        
-        var blocked = false;
-        foreach (var collider in this.GetComponentsInChildren<BuildingColliderComponent>())
+        if (DateTime.Now > this.DateTime)
         {
-            if (collider.Blocked)
-            {
-                blocked = true;
-                break;
-            }
+            this.ready = true;
+            this.CollectionIcon.SetActive(true);
         }
-        
-        if (!blocked && Input.GetMouseButtonUp(0))
+    }
+
+    public void Collect()
+    {
+        if (this.ready)
         {
-            position = this.transform.position;
-            position.z = -0.1f;
-            GameObject.Destroy(this);
+            this.islandComponent.Add(Resource.Wood, 1);
+            this.DateTime = DateTime.Now.AddSeconds(this.Seconds);
+            this.ready = false;
+            this.CollectionIcon.SetActive(false);
         }
     }
 }
