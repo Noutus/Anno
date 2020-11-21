@@ -25,6 +25,11 @@ public class PlacementComponent : MonoBehaviour
         var blocked = false;
         foreach (var collider in this.GetComponentsInChildren<BuildingColliderComponent>())
         {
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log("Now!");
+            }
+
             if (collider.Blocked)
             {
                 blocked = true;

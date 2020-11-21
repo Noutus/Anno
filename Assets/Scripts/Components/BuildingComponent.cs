@@ -26,7 +26,6 @@ public class BuildingComponent : MonoBehaviour
             this.ready = true;
             this.CollectionIcon.SetActive(true);
         }
-<<<<<<< HEAD
     }
 
     public void Collect()
@@ -37,22 +36,19 @@ public class BuildingComponent : MonoBehaviour
             this.DateTime = DateTime.Now.AddSeconds(this.Seconds);
             this.ready = false;
             this.CollectionIcon.SetActive(false);
-=======
-        
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (!blocked)
-            {
-                position = this.transform.position;
-                position.z = -0.1f;
-                GameObject.Destroy(this);
-            }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    if (!blocked)
+        //    {
+        //        position = this.transform.position;
+        //        position.z = -0.1f;
+        //        GameObject.Destroy(this);
+        //    }
 
-            else
-            {
-                GameObject.Destroy(this.gameObject);
-            }
->>>>>>> a0123f590d22768e45b1637c7d19138f56f988fd
+        //    else
+        //    {
+        //        GameObject.Destroy(this.gameObject);
+        //    }
         }
     }
 }
