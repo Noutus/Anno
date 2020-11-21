@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -27,15 +28,15 @@ public class GameController : MonoBehaviour
                     if (building != null)
                         building.Collect();
 
-                    var placement = hit.transform.parent.gameObject.AddComponent<PlacementComponent>();
-                    if (placement != null)
-                        placement.BasePosition = hit.transform.parent.position;
+                    this.StartCoroutine(this.WaitForPlacement(hit.transform.parent));
                 }
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            this.StopAllCoroutines();
+
             Ray ray = new Ray(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
             RaycastHit hit;
 
@@ -60,5 +61,14 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator WaitForPlacement(Transform buildingObject)
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        var placement = buildingObject.gameObject.AddComponent<PlacementComponent>();
+        if (placement != null)
+            placement.BasePosition = buildingObject.position;
     }
 }
