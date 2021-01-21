@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ScreenComponent : MonoBehaviour
 {
-    public State State;
+    public List<State> States;
 
     protected virtual void Start()
     {
@@ -16,6 +17,6 @@ public class ScreenComponent : MonoBehaviour
 
     protected virtual void Changed(State oldState, State newState)
     {
-        this.gameObject.SetActive(newState == this.State);
+        this.gameObject.SetActive(this.States.Contains(newState));
     }
 }

@@ -30,4 +30,11 @@ public class IslandComponent : MonoBehaviour
 
         this.buildingController.Set(this);
     }
+
+    public int Get(Resource resource)
+    {
+        if (!this.Resources.ContainsKey(resource))
+            return 0;
+        return this.Resources[resource];
+    }
 }

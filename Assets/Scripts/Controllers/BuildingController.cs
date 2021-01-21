@@ -106,7 +106,6 @@ public class BuildingController : MonoBehaviour
 
             catch(Exception e)
             {
-                File.Delete(path);
                 this.islands = new List<IslandModel>();
             }
         }

@@ -2,7 +2,7 @@
 
 public class PlacementComponent : MonoBehaviour
 {
-    private const float TileSize = 0.64f;
+    private const float TileSize = 0.96f;
 
     private BuildingController buildingController;
 
